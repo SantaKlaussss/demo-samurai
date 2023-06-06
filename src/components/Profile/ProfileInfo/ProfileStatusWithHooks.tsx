@@ -4,6 +4,10 @@ type PropsType = {
   status: string
   updateStatus: (status: string) => void
 }
+type PropsType2 = {
+  status: string
+  updateStatus: (status: string) => void
+}
 
 const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
   type UseStatusType = typeof props.status;
