@@ -1,0 +1,22 @@
+.pageNumber.selectedPage {
+  font-weight: bold;
+  border-color: black;
+  background-color: lightcoral;
+}
+
+.paginator {
+  margin: 6px 0px 20px 0px;
+  cursor: pointer;
+}
+
+.pageNumber {
+  border: solid 1px grey;
+  background-color: rgb(174, 182, 200);
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.pageNumber:first-child {
+  margin-left: 5px;
+}

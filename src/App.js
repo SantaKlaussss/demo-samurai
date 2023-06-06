@@ -2,11 +2,11 @@ import React, { Suspense } from 'react';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
-import UsersContainer from './components/Users/UsersContainer';
+import UsersContainer from './components/Users/UsersContainer.tsx';
 import HeaderComponent from './components/Header/HeaderContaier';
 import LoginPage from './components/Login/Login';
 import { connect } from 'react-redux';
-import { initializeApp } from './redux/app-reducer';
+import { initializeApp } from './redux/app-reducer.ts';
 import Preloader from './components/common/Preloader/Preloader';
 
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -26,7 +26,7 @@ class App extends React.Component {
 
       return (
         <Suspense fallback={<Preloader />}>
-          <Router>
+          <Router basename={process.env.PUBLIC_URL}>
             <div className='app-wrapper'>
               <HeaderComponent />
               <Nav />
@@ -34,7 +34,7 @@ class App extends React.Component {
                 <Routes>
                   <Route path='/dialogs/*' element={<DialogsContainer />} />
                   <Route path='/profile/:userId?' element={<ProfileContainer />} />
-                  <Route path='/users/*' element={<UsersContainer />} />
+                  <Route path='/users/*' element={<UsersContainer pageTitle={'Самурай'}/>} />
                   <Route path='/login/*' element={<LoginPage />} />
                 </Routes>
               </div>
