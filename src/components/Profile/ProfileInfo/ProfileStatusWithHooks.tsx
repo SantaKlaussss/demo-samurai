@@ -4,16 +4,11 @@ type PropsType = {
   status: string
   updateStatus: (status: string) => void
 }
-type PropsType2 = {
-  status: string
-  updateStatus: (status: string) => void
-}
 
 const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
-  type UseStatusType = typeof props.status;
 
   let [editMode, setEditMode] = useState<boolean>(false);
-  let [status, setStatus] = useState<UseStatusType>(props.status);
+  let [status, setStatus] = useState<string>(props.status);
 
   useEffect( () => {
     setStatus(props.status)
@@ -28,7 +23,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     props.updateStatus(status);
   }
 
-  let onStatusChange = (e) => {
+  let onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus(e.currentTarget.value);
   }
 
@@ -38,7 +33,8 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
         <div>
           <span 
             onDoubleClick={activateEditMode}
-          > <b>Status:</b> {props.status || '------'}</span>
+          > <b>Status:</b> {props.status || '------'}
+          </span>
         </div>
       }
       {editMode &&
@@ -49,8 +45,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
             value={status} 
             onChange={onStatusChange}
             placeholder='placeholder'
-          >
-          </input>
+          ></input>
         </div>
       }
     </div>

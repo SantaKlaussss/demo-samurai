@@ -2,8 +2,8 @@ import React from 'react';
 import style from './MyPosts.module.css';
 import Post from './Post/Post';
 import { Field, reduxForm } from 'redux-form';
-import { maxLengthCreator, required } from '../../../utils/validators/validators';
-import { Textarea } from '../../common/FormsControls/FormsControls';
+import { maxLengthCreator, required } from '../../../utils/validators/validators.ts';
+import { Textarea } from '../../common/FormsControls/FormsControls.tsx';
 
 const MyPosts = (props) => {
 

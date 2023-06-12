@@ -1,8 +1,8 @@
 import { stopSubmit } from 'redux-form';
-import { authAPI, securityAPI } from "../api/api";
-
-const SET_USER_DATE = 'samurai-network/auth/SET-USER-DATE';
-const SET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/SET-CAPTCHA-URL-SUCCESS';
+import { ResultCodeForCaptcha, ResultCodesEnum } from "../api/api.ts";
+import { BaseThunkType, InferActionsTypes } from './redux-store.ts';
+import { authAPI } from '../api/auth-api.ts';
+import { securityAPI } from '../api/security-api.ts';
 
 let initialState = {
   userId: null as number | null,
@@ -13,60 +13,46 @@ let initialState = {
   captchaUrl: null as string | null,
 };
 
-export type InitialStateType = typeof initialState;
+type InitialStateType = typeof initialState;
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
   switch (action.type) {
-    case SET_USER_DATE:
-    case SET_CAPTCHA_URL_SUCCESS:
+    case 'SET-USER-DATE':
+    case 'SET-CAPTCHA-URL-SUCCESS':
       return {
-        userIeerk4d: '123',
         ...state,
-        ...action.payload
+        ...action.payload,
       }
     default:
       return state;
   }
 };
 
-type SetAuthUserDateActionPayloadType = {
-  userId: number | null 
-  email: string | null
-  login: string | null
-  isAuth: boolean
+type ActionsTypes = InferActionsTypes<typeof actionsAuth>;
+
+export const actionsAuth = {
+  setAuthUserDate: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({ type: 'SET-USER-DATE', payload: { userId, email, login, isAuth } }),
+
+  setCaptchaUrlSuccess: (captchaUrl: string) => ({ type: 'SET-CAPTCHA-URL-SUCCESS', payload: { captchaUrl } })
 }
-type SetAuthUserDateActionType = {
-  type: typeof SET_USER_DATE
-  payload: SetAuthUserDateActionPayloadType
-}
-
-export const setAuthUserDate = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): SetAuthUserDateActionType => ({ type: 'samurai-network/auth/SET-USER-DATE', payload: { userId, email, login, isAuth } });
-
-
-type SetCaptchaUrlSuccessActionType = {
-  type: typeof SET_CAPTCHA_URL_SUCCESS
-  payload: { captchaUrl: string }
-}
-
-export const setCaptchaUrlSuccess = (captchaUrl: string): SetCaptchaUrlSuccessActionType => ({ type: 'samurai-network/auth/SET-CAPTCHA-URL-SUCCESS', payload: { captchaUrl } });
-
 
 export const getAuthUserData = () => async (dispatch: any) => {
+  let meData = await authAPI.me();
 
-  let response = await authAPI.me();
-  if (response.resultCode === 0) {
-    let { id, login, email } = response.data;
-    dispatch(setAuthUserDate(id, email, login, true));
+  if (meData.resultCode === ResultCodesEnum.Success) {
+    let { id, login, email } = meData.data;
+    dispatch(actionsAuth.setAuthUserDate(id, email, login, true));
   }
 }
-export const login = (email: string, password: number, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
 
-  let response = await authAPI.login(email, password, rememberMe, captcha)
-  if (response.resultCode === 0) {
+export const login = (email: string, password: number, rememberMe: boolean, captcha: string): BaseThunkType<ActionsTypes> => async (dispatch) => {
+  let response = await authAPI.login(email, password, rememberMe, captcha);
+  
+  if (response.resultCode === ResultCodesEnum.Success) {
     getAuthUserData();
   } else {
 
-    if (response.resultCode === 10) {
+    if (response.resultCode === ResultCodeForCaptcha.CaptchIsRequired) {
       dispatch(getCaptchaURL());
     }
 
@@ -75,17 +61,16 @@ export const login = (email: string, password: number, rememberMe: boolean, capt
   }
 }
 
-export const getCaptchaURL = () => async (dispatch: any) => {
-  let response = await securityAPI.getCaptchaURL();
-  const captchaUrl = response.data.url;
-  dispatch(setCaptchaUrlSuccess(captchaUrl));
+export const getCaptchaURL = (): BaseThunkType<ActionsTypes> => async (dispatch) => {
+  let data = await securityAPI.getCaptchaURL();
+  dispatch(actionsAuth.setCaptchaUrlSuccess(data.url));
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): BaseThunkType<ActionsTypes> => async (dispatch) => {
 
   let responce = await authAPI.logout();
   if (responce.resultCode === 0) {
-    dispatch(setAuthUserDate(null, null, null, false));
+    dispatch(actionsAuth.setAuthUserDate(null, null, null, false));
   }
 }
 
