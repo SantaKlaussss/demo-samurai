@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, requestUsers, setCurrentPage, unfollow, toggleFollowingProgress } from "../../redux/users-reducer.ts";
+import { follow, requestUsers, unfollow } from "../../redux/users-reducer.ts";
 import Users from './Users.tsx';
-import Preloader from '../common/Preloader/Preloader.js';
+import Preloader from '../common/Preloader/Preloader.tsx';
 import { Navigate } from 'react-router-dom';
 import { compose } from 'redux';
 import { getCurrentPage, getFollowingInProgress, getIsAuth, getIsFetching, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selectors.ts';
