@@ -1,6 +1,6 @@
 import { BaseThunkType, InferActionsTypes } from './redux-store.ts';
 import { UserType } from './../types/types.ts';
-import objectUpdateInArray from "../utils/validators/objectHelpers.js";
+import objectUpdateInArray from "../utils/validators/objectHelpers.ts";
 import { Dispatch } from 'redux';
 import { usersAPI } from '../api/users-api.ts';
 

@@ -1,12 +1,12 @@
 import React from "react";
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { Input, createField } from "../common/FormsControls/FormsControls.tsx";
+import { reduxForm, InjectedFormProps } from 'redux-form';
+import { GetStringKeys, Input, createField } from "../common/FormsControls/FormsControls.tsx";
 import { maxLengthCreator, required } from "../../utils/validators/validators.ts";
 import { login } from "../../redux/auth-reducer.ts";
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import styles from '../common/FormsControls/FormsControls.module.css';
-import { AppStateType } from '../../redux/redux-store.js';
+import { AppStateType } from '../../redux/redux-store.ts';
 
 const maxLength5 = maxLengthCreator(20)
 
@@ -14,18 +14,18 @@ type LoginFormOwnProps = {
   captchaUrl: string | null
 }
 
-const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType> & LoginFormValuesType> = ({ handleSubmit, error, captchaUrl }) => {
+const LoginForm: React.FC<InjectedFormProps<LoginFormOwnProps & LoginFormValuesType>> = ({ handleSubmit, error, captchaUrl }) => {
   return (
     <form onSubmit={handleSubmit} >
-      {createField<LoginFormPropertiesType>
+      {createField<LoginFormValuesKeysType>
         ("email", 'email', Input, [required, maxLength5])}
-      {createField<LoginFormPropertiesType>
+      {createField<LoginFormValuesKeysType>
         ("password", 'password', Input, [required, maxLength5], { type: 'password' })}
-      {createField<LoginFormPropertiesType>
+      {createField<LoginFormValuesKeysType>
         (undefined, 'rememberMe', Input, [], { type: 'checkbox', checked: true }, 'remember me')}
 
       {captchaUrl && <img alt="" src="captchaUrl" />}
-      {captchaUrl && createField<LoginFormPropertiesType>
+      {captchaUrl && createField<LoginFormValuesKeysType>
       ('Enter symbols from image', 'captcha', Input, [required], {})}
 
       {(error)
@@ -57,7 +57,7 @@ export type LoginFormValuesType = {
   captcha: string
 }
 
-type LoginFormPropertiesType = Extract<keyof LoginFormValuesType, string>
+type LoginFormValuesKeysType = GetStringKeys<LoginFormValuesType>
 
 const Login: React.FC<MapStateToPropsType & MapDispatchToPropsType> = ({ login, isAuth, captcha }) => {
 

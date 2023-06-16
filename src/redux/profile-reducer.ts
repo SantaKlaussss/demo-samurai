@@ -1,9 +1,8 @@
 import { stopSubmit } from "redux-form";
 import { ResultCodesEnum } from "../api/api.ts";
-import { PhotosType, PostsType, ProfileType } from "../types/types";
-import { BaseThunkType, InferActionsTypes } from "./redux-store";
+import { PhotosType, PostsType, ProfileType } from "../types/types.ts";
+import { BaseThunkType, InferActionsTypes } from "./redux-store.ts";
 import { profileAPI } from "../api/profile-api.ts";
-import { error } from "console";
 
 let initialState = {
   posts: [
@@ -15,8 +14,7 @@ let initialState = {
     { id: 6, message: 'Димыч красавчик', likesCount: 10 },
   ] as Array<PostsType>,
   profile: null as ProfileType | null,
-  status: '',
-  newPostText: '' 
+  status: ''
 }
 
 export type InitialStateType = typeof initialState;
@@ -32,8 +30,7 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
       };
       return {
         ...state,
-        posts: [...state.posts, newPost],
-        newPostText: ''
+        posts: [...state.posts, newPost]
       }
     };
 

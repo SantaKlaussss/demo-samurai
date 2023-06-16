@@ -2,13 +2,16 @@ import React from 'react';
 import style from './Header.module.css'
 import { NavLink } from 'react-router-dom';
 
-type HeaderType = {
+export type MapHeaderType = {
   isAuth: boolean
   login: string
-  logout: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const Header: React.FC<HeaderType> = (props) => {
+export type DispatchHeaderType = {
+  logout: () => void
+}
+
+const Header: React.FC<MapHeaderType & DispatchHeaderType> = (props) => {
   return(
     <header className={style.header}>
         <img 

@@ -1,18 +1,9 @@
-import React from "react";
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
-import { ProfileType } from "../../types/types";
+import React from "react"
+import ProfileInfo from './ProfileInfo/ProfileInfo.tsx'
+import MyPostsContainer from './MyPosts/MyPostsContainer.tsx'
+import { ProfileInfoPropsType } from './ProfileInfo/ProfileInfo.tsx'
 
-type PropsType = {
-  savePhoto: () => void
-  isOwner: boolean
-  profile: ProfileType
-  status: string
-  updateStatus: () => void
-  saveProfile: () => void
-}
-
-const Profile: React.FC<PropsType> = (props) => {
+const Profile: React.FC<ProfileInfoPropsType> = (props) => {
   
   return (
     <div>

@@ -1,5 +1,5 @@
 export type PostsType = {
-  id: number
+  id?: number
   message: string
   likesCount: number
 }
@@ -27,6 +27,7 @@ export type ProfileType = {
   fullName: string
   contacts: ContanctsType
   photos: PhotosType
+  aboutMe: string
 }
 
 export type UserType = {
