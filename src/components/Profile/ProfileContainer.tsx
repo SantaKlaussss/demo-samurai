@@ -6,7 +6,7 @@ import { withAuthRedirect } from '../../hoc/withAuthRedirect.tsx';
 import { compose } from 'redux';
 import { useParams } from 'react-router-dom';
 import { AppStateType } from '../../redux/redux-store.ts';
-import { ProfileType } from '../../types/types.js';
+import { ProfileType } from '../../types/types.ts';
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
@@ -79,8 +79,8 @@ let mapStateToProps = (state: AppStateType) => ({
   isAuth: state.auth.isAuth
 });
 
-function withRouter(Component: React.FC) {
-  function ComponentWithRouterProp(props) {
+function withRouter(Component: React.FC<PropsType>) {
+  function ComponentWithRouterProp(props: PropsType) {
     let params = useParams();
     return (
       <Component

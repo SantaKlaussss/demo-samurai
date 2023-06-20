@@ -6,8 +6,8 @@ import Preloader from '../common/Preloader/Preloader.tsx';
 import { Navigate } from 'react-router-dom';
 import { compose } from 'redux';
 import { getCurrentPage, getFollowingInProgress, getIsAuth, getIsFetching, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selectors.ts';
-import { UserType } from '../../types/types.js';
-import { AppStateType } from '../../redux/redux-store.js';
+import { UserType } from '../../types/types.ts';
+import { AppStateType } from '../../redux/redux-store.ts';
 
 type MapStatePropsType = {
   currentPage: number
@@ -75,7 +75,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 export default compose(
-  //TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState
   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
   (mapStateToProps,
   { follow, unfollow, requestUsers }))(UsersContainer)
