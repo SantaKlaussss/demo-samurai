@@ -33,8 +33,7 @@ const Dialogs: React.FC<OwnPropsType> = (props) => {
   let messagesElements = props.dialogsPage.messages.map(item => 
   <Message 
     key={item.id} 
-    message={item.message} 
-    id={item.id} 
+    message={item.message}
   />)
 
   return (

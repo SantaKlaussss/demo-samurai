@@ -4,7 +4,7 @@ import Preloader from '../../common/Preloader/Preloader.tsx';
 import anonim from '../../../assets/images/anonim.jpg';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks.tsx';
 import ProfileDataForm from './ProfileDataForm.tsx';
-import { ProfileType } from '../../../types/types.ts';
+import { ContanctsType, ProfileType } from '../../../types/types.ts';
 
 export type ProfileInfoPropsType = {
   profile: ProfileType | null
@@ -39,7 +39,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
       <div className={styles.descriptionBlock}>
         <img src={props.profile.photos.large || anonim}
           alt="No name" className={styles.avatarAnanimus} />
-        {(props.isOwner) && <input type='file' onChange={onMainPhotoSelected} />} <p></p>
+        {(props.isOwner) && <label> <input type='file'title='' placeholder='input' onChange={onMainPhotoSelected} /> </label> } <p></p>
         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />        <p></p>
 
         {editMode
@@ -77,7 +77,7 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({ profile, isOwner, goToEdi
             return <Contact 
                       key={key} 
                       contactTitle={key} 
-                      contactValue={profile.contacts[key]} />
+                      contactValue={profile.contacts[key as keyof ContanctsType]} />
         })}
       </div>
     </div>

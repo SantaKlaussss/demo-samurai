@@ -3,6 +3,7 @@ import { ResultCodesEnum } from "../api/api.ts";
 import { PhotosType, PostsType, ProfileType } from "../types/types.ts";
 import { BaseThunkType, InferActionsTypes } from "./redux-store.ts";
 import { profileAPI } from "../api/profile-api.ts";
+import { getNewId } from "../utils/idGereration.ts";
 
 let initialState = {
   posts: [
@@ -24,7 +25,7 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
   switch (action.type) {
     case "ADD-POST": {
       let newPost = {
-        id: 5,
+        id: getNewId(),
         message: action.newPostText, 
         likesCount: 0,
       };

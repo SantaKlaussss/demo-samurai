@@ -10,7 +10,7 @@ type ProfileDataFormType = {
 
 type ProfileTypeKeys = GetStringKeys<ProfileType>
 
-const ProfileDataForm: React.FC<InjectedFormProps<ProfileTypeKeys & ProfileDataFormType, ProfileDataFormType>> = ({handleSubmit, profile, error}) => {
+const ProfileDataForm: React.FC<any> = ({handleSubmit, profile, error}) => {
   return (
     <form onSubmit={handleSubmit}>
       {<div><button >Save</button></div>}
@@ -41,6 +41,6 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileTypeKeys & ProfileDataF
   )
 }
 
-const ProfileDataFormReduxForm = reduxForm<ProfileDataFormType, ProfileDataFormType>({form: 'edit-profile'})(ProfileDataForm)
+const ProfileDataFormReduxForm = reduxForm<any, any>({form: 'edit-profile'})(ProfileDataForm)
 
 export default ProfileDataFormReduxForm;

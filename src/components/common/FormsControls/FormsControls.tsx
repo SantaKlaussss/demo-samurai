@@ -5,7 +5,7 @@ import { FieldValidatorType } from "../../../utils/validators/validators";
 
 type FormControlParamsType = {
   meta: { 
-    error: string 
+    error?: string 
     touched: boolean 
   }
   children: React.ReactNode
@@ -28,8 +28,17 @@ const FormControl: React.FC<FormControlParamsType> = ({ meta: { error, touched }
 
 export const Textarea: React.FC<WrappedFieldProps> = (props) => {
   const { input, meta, child, ...restProps } = props
-  return <FormControl {...props}><textarea {...input} {...restProps} /> </FormControl>
-
+  return (
+    <FormControl 
+      // children={child} 
+      meta={meta}
+    >
+      <textarea 
+        {...input} 
+        {...restProps} 
+      /> 
+    </FormControl>
+  )
 }
 
 export const Input: React.FC<WrappedFieldProps> = (props) => {
@@ -37,13 +46,13 @@ export const Input: React.FC<WrappedFieldProps> = (props) => {
   return <FormControl {...props}> <input {...input} {...restProps} /> </FormControl>
 }
 
-export function createField<FormKeysType> (
+export function createField<FormKeysType extends string> (
   placeholder: string | undefined, 
   name: FormKeysType, 
   component: React.FC<WrappedFieldProps>, 
   validators: Array<FieldValidatorType>,  
   props = {}, 
-  text: string = '' 
+  text: string = '',
   ) {
   return <div>
     <Field 
